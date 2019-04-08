@@ -4,4 +4,4 @@ services:
 before_install:
   - docker build -t weezyval/containerization-docker-aws -f Dockerfile.dev .
 script:
-  - docker run weezyval/Containerization-docker-aws npm run test
+  - docker run weezyval/containerization-docker-aws npm run test
