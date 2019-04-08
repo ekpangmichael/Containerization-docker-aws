@@ -21,7 +21,7 @@ This project uses the following docker files
 
 **1.  Dockerfile.dev**
 
-<br><center><img width="200px" src="img/dockerfile.dev.png"></center><br>
+<br><center><img width="400px" src="img/dockerfile.dev.png"></center><br>
 The Dockerfile.dev file is used during development, this file is used to create an image during development.
 
     -   I used a node alpine image because it is smaller
@@ -33,7 +33,7 @@ The Dockerfile.dev file is used during development, this file is used to create 
 For the container to work effectively during development i created a docker-compose. The docker compose is used to start a container with the image during development
 
 **The docker-compose file runs two services.**
-<br><center><img src="img/docker-compose.png"></center><br>
+<br><center><img width="400px" src="img/docker-compose.png"></center><br>
 The first service is the ***web service*** which builds the image and starts the app,
 it also exposes port 8080 on the host to port 8080 in the container,
 and creates a volume that maps the current directory to the app directory in the container. It also sets the node_modules volume, this enables the container to watch for changes during development.
@@ -41,7 +41,7 @@ and creates a volume that maps the current directory to the app directory in the
 The second service is the test service, the test service builds the image and overrides the default command with `npm run test` command and ensures that the container watch for changes in the test and runs them accordingly.
 
 **2. Dockerfile**
-<br><center><img src="img/dockerfile.png"></center><br>
+<br><center><img width="400px" src="img/dockerfile.png"></center><br>
 The Dockerfile is use for production, It also uses the node alpine image
 
     -   I am setting the first step as the builder
