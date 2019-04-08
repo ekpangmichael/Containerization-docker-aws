@@ -2,6 +2,6 @@ sudo: required
 services:
   - docker
 before_install:
-  - docker build -t weezyval/Containerization-docker-aws -f Dockerfile.dev .
+  - docker build -t weezyval/containerization-docker-aws -f Dockerfile.dev .
 script:
   - docker run weezyval/Containerization-docker-aws npm run test
