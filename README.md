@@ -21,7 +21,7 @@ This project uses the following docker files
 
 **1.  Dockerfile.dev**
 
-<br><center><img src="img/dockerfile.dev.png"></center><br>
+<br><center><img width="200px" src="img/dockerfile.dev.png"></center><br>
 The Dockerfile.dev file is used during development, this file is used to create an image during development.
 
     -   I used a node alpine image because it is smaller
