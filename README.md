@@ -70,7 +70,7 @@ if the test is successful, it runs the deployment step which deploys the app to 
 
 
 -   clone the repo
--   setup and Travis account
+-   setup a Travis account
 -   login into AWS console
 -   Search for [Elastic Beanstalk](https://docs.aws.amazon.com/console/quickstarts)
 -   Click on create an application
