@@ -6,45 +6,19 @@ Containerization is the process of encapsulating your application into a contain
 
 It involves bundling an application together with all of its related configuration files, libraries and dependencies required for it to run in an efficient and bug-free way across different computing environments.
 
-In the areas of software development, containerization is the encapsulation of an application with its own operating environment which can be run on any host machine without installing any more dependencies. It is a uniform structure in which an application can be stored.
+In the area of software development, containerization is the encapsulation of an application with its own operating environment which can be run on any host machine without installing any more dependencies. It is a uniform structure in which an application can be stored.
 
 The most popular containerization ecosystems are Docker and Kubernetes.
 
-**What is Docker**
+## What is Docker
 
-Docker is a tool that makes it easier to create, deploy, and run any applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
+Docker is a tool that makes it easy to create, deploy, and run any application by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
 
-**What is Kubernetes**
-
-Kubernetes is an open source container orchestration system that is used to automate application deployment, scaling application and managing containers. It is also a platform for managing containerized workloads and service across a collection of cluster host.
-
-At Travela we have different Docker files which we use to build the docker images that runs our application.
-For development we have a docker that builds our frotend and backend images . 
-For the backenmd, we use a docker compose file to run the application in developer. This docker compose file create two containers, one is the *app container* this runs the backend functionality of the application. Another one is the *Database container* This runs a postgres image which holds the apllication database.
-
-
-#### Below are the docker files for our application
-- https://drive.google.com/file/d/1hk60pj22ZAd9FNKLd3yOwGMguobhS-le/view?usp=sharing
-- https://drive.google.com/file/d/1ncejisAq4GrphsmozoY6FAlQxRYMBOdX/view?usp=sharing
-
-Containerization is the process of encapsulating your application into a container.
-
-The frontend docker file also create the frontend container which holds the frontend functionalities
-It involves bundling an application together with all of its related configuration files, libraries and dependencies required for it to run in an efficient and bug-free way across different computing environments.
-
-In the areas of software development, containerization is the encapsulation of an application with its own operating environment which can be run on any host machine without installing any more dependencies. It is a uniform structure in which an application can be stored.
-
-The most popular containerization ecosystems are Docker and Kubernetes.
-
-**What is Docker**
-
-Docker is a tool that makes it easier to create, deploy, and run any application by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
-
-**What is Kubernetes**
+## What is Kubernetes
 
 Kubernetes is an open source container orchestration system that is used to automate application deployment, scaling, and managing containers. It is also a platform for managing containerized workloads and service across a collection of cluster host.
 
-**How we dockerize our application on Travela**
+## How we dockerize our application on Travela
 At Travela we have different Docker files which we use to build the docker images that runs our application.
 In Development, we have a docker file that builds our frontend and backend docker images . 
 For the backend, we use a docker compose file to run the application. This docker compose file create two containers, one is the *app container* this runs the backend image that holds the api functionalities of the application. Another one is the *Database container* This runs a postgres image which holds the application database.
@@ -93,7 +67,8 @@ HHere we are setting the working directory to /usr/app inside the container
 The above lines, we are updating our packages in the image and installing yarn globally
 
 > COPY package.json /usr/app
->  COPY yarn.lock /usr/app
+> 
+> COPY yarn.lock /usr/app
 
 Here we are copying the package.json and yarn.lock file into the app folder inside the container.
 
