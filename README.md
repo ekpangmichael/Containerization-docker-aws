@@ -27,50 +27,104 @@ For the backenmd, we use a docker compose file to run the application in develop
 - https://drive.google.com/file/d/1hk60pj22ZAd9FNKLd3yOwGMguobhS-le/view?usp=sharing
 - https://drive.google.com/file/d/1ncejisAq4GrphsmozoY6FAlQxRYMBOdX/view?usp=sharing
 
+Containerization is the process of encapsulating your application into a container.
 
 The frontend docker file also create the frontend container which holds the frontend functionalities
+It involves bundling an application together with all of its related configuration files, libraries and dependencies required for it to run in an efficient and bug-free way across different computing environments.
 
-#### Image Link
-- https://drive.google.com/file/d/14YisZgO35NZoftSBpzyrJS5WAZMidkt2/view?usp=sharing
+In the areas of software development, containerization is the encapsulation of an application with its own operating environment which can be run on any host machine without installing any more dependencies. It is a uniform structure in which an application can be stored.
 
+The most popular containerization ecosystems are Docker and Kubernetes.
 
-## For Staging
+**What is Docker**
 
-In the staging environment, we have a CI/CD pipeline that deploys the application. The application is deployed when a new feature, bug or chore has been merged to develop branch, and this is deployed to GCP (Google Cloud platform).
+Docker is a tool that makes it easier to create, deploy, and run any application by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
 
-For the deployment to occur all the required criteria must be met, example all the test must pass before that branch can be merged.
+**What is Kubernetes**
 
-Before the app is deployed, the CI/CD platform will use the release docker file to build the image of our application, this image is then pushed to GCR (google container registry). The image is then used to deploy the application in the staging cluster.
+Kubernetes is an open source container orchestration system that is used to automate application deployment, scaling, and managing containers. It is also a platform for managing containerized workloads and service across a collection of cluster host.
 
-#### Images
-##### Circle CI workflow that deploys to staging.
-1.[Frontend](https://drive.google.com/file/d/1vuseG_yInP8Y-EUwbgGsp5X_T_4q_aJz/view?usp=sharing)
-
-2.[Backend](https://drive.google.com/file/d/1kcpYZoe-2_WQE6qrFm6pqwbux3Bt5zNG/view?usp=sharing)
-
-
-
-## For production
-
-For production, the application is deployed on travela-production cluster, both the frontend and backend container runs on this cluster.
-
-#### Images
-##### Circle CI workflow that deploys to production
-1.[Frontend](https://drive.google.com/file/d/1PmaNn1E2_6ch8kB0AsOhuI6noPaI69x-/view?usp=sharing)
-
-2.[Backend](https://drive.google.com/file/d/12Xq2fH_B3Q6T0aHnVADYodZy4CNSp97h/view?usp=sharing)
+**How we dockerize our application on Travela**
+At Travela we have different Docker files which we use to build the docker images that runs our application.
+In Development, we have a docker file that builds our frontend and backend docker images . 
+For the backend, we use a docker compose file to run the application. This docker compose file create two containers, one is the *app container* this runs the backend image that holds the api functionalities of the application. Another one is the *Database container* This runs a postgres image which holds the application database.
 
 
+**Backend Docker file**
 
-##### Images to circle CI configuration that helps with the deployment
+![dockerfile](img/dockerfile.dev.png)
 
-1. Backend configuration:
-- https://drive.google.com/file/d/1WKz5tIoGehUuQB5-U6AdnLUhWNnnP4ud/view?usp=sharing
-- https://drive.google.com/file/d/1GYmLuy5gOy2EY9gnYI_ACql14fOQjpGT/view?usp=sharing
+> FROM node:10.13.0-alpine
 
+The first line in our Docker file is the node image we are using. We are making use of the node alpine image, the reason why we are using this the node alpine image is because it is light weight as a result, our overall image size will be smaller
 
+> WORKDIR /usr/app
+> 
+Here we are setting the working directory to /usr/app inside the container
+> 
+> RUN apk update && apk upgrade && \
+> npm install -g yarn@1.12.x && rm -rf package-lock.json
 
-2. Frontend configuration
-- https://drive.google.com/file/d/1Ovegz8tzNno8W3iAH1HU2kNp78Ty_39t/view?usp=sharing
-- https://drive.google.com/file/d/1-KDhDEVx0fOBuYgSSMnd-cOCX4n7y9gF/view?usp=sharing
+The above lines, we are updating our packages in the image and installing yarn globally
 
+> COPY package.json /usr/app
+>  COPY yarn.lock /usr/app
+
+Here we are copying the package.json and yarn.lock file into the app folder inside the container.
+
+> RUN yarn install
+> 
+The last stage here we are running the yarn install command. This command installs all the dependencies in our application.
+
+**Frontend Docker file**
+![dockerfile](img/docker-frontend.png)
+
+> FROM node:carbon
+
+We are using a node carbon image as our base image.
+
+> WORKDIR /usr/app
+> 
+HHere we are setting the working directory to /usr/app inside the container
+> 
+> RUN apk update && apk upgrade && \
+> npm install -g yarn@1.12.x && rm -rf package-lock.json
+
+The above lines, we are updating our packages in the image and installing yarn globally
+
+> COPY package.json /usr/app
+>  COPY yarn.lock /usr/app
+
+Here we are copying the package.json and yarn.lock file into the app folder inside the container.
+
+> RUN yarn install
+> 
+The last stage here we are running the yarn install command. This command installs all the dependencies in our application.
+
+**Frontend Docker file**
+
+> FROM node:carbon
+
+We are using a node carbon image as our base image.
+
+> WORKDIR /usr/app
+> 
+Here we are setting the working directory to /usr/app inside the container
+> 
+> RUN apk update && apk upgrade && \
+> npm install -g yarn@1.12.x && rm -rf package-lock.json
+
+The above lines, we are updating our packages in the image and installing yarn globally
+
+> COPY build /usr/src/app
+
+Here we are copying the build into the app folder inside the container.
+
+> RUN npm install -g serve@9.4.0
+> 
+The last stage here we install serve globally, this is what we are using to serve the app
+
+**Backend Docker compose file**
+The Docker compose file runs two services, The *app* service which runs the backend application using the backend docker file and the *database* service which runs a postgres database.
+The app container  exposes port 5000 to the host machine
+The database container exposes Port 5432 to the host machine
