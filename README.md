@@ -50,7 +50,7 @@ In Development, we have a docker file that builds our frontend and backend docke
 For the backend, we use a docker compose file to run the application. This docker compose file create two containers, one is the *app container* this runs the backend image that holds the api functionalities of the application. Another one is the *Database container* This runs a postgres image which holds the application database.
 
 
-**Backend Docker file**
+## Backend Docker 
 
 ![dockerfile](img/dockerfile.dev.png)
 
@@ -76,7 +76,7 @@ Here we are copying the package.json and yarn.lock file into the app folder insi
 > 
 The last stage here we are running the yarn install command. This command installs all the dependencies in our application.
 
-**Frontend Docker file**
+## Frontend Docker file
 ![dockerfile](img/docker-frontend.png)
 
 > FROM node:carbon
@@ -101,7 +101,7 @@ Here we are copying the package.json and yarn.lock file into the app folder insi
 > 
 The last stage here we are running the yarn install command. This command installs all the dependencies in our application.
 
-**Frontend Docker file**
+## Frontend Docker file
 
 > FROM node:carbon
 
@@ -124,7 +124,7 @@ Here we are copying the build into the app folder inside the container.
 > 
 The last stage here we install serve globally, this is what we are using to serve the app
 
-**Backend Docker compose file**
+## Backend Docker compose file
 The Docker compose file runs two services, The *app* service which runs the backend application using the backend docker file and the *database* service which runs a postgres database.
 The app container  exposes port 5000 to the host machine
 The database container exposes Port 5432 to the host machine
